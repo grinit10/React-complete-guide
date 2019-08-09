@@ -25,6 +25,7 @@ const Cockpit = (props) => {
 	 <h1>{props.appTitle}</h1>
      <p className={classess.join(' ')}>It is really working!</p>
 	 <button className={btnColor} onClick={props.clicked}>Switch Name</button>
+	 <button onClick={props.loggedIn}>Log In</button>
 	 </Aux>
 	);
 }

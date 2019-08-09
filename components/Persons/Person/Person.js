@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import "./Person.css";
 import PropTypes from 'prop-types';
+import { AuthContext } from '../../../containers/App';
 
 
 class Person extends PureComponent{
@@ -27,6 +28,9 @@ class Person extends PureComponent{
 		console.log("[person.js] inside render");
 		return (
 			<div className="Person">
+			<AuthContext.Consumer>
+				{auth => auth ? <p>I'm Authenticated</p> : null }
+			</AuthContext.Consumer>
 				<p onClick={this.props.click}>"I am {this.props.name} and I am {this.props.age} years old."</p>
 				<p>{this.props.children}</p>
 				<input 
