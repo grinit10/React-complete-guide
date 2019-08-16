@@ -4,7 +4,7 @@ import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
 import NewPost from '../../components/NewPost/NewPost';
 import './Blog.css';
-import axios from 'axios';
+import axios from '../../Axios';
 
 class Blog extends Component {
     state = {
@@ -13,8 +13,9 @@ class Blog extends Component {
         error : false
     }
     componentDidMount(){
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('/posts')
                 .then(response => {
+                    console.log("frpm local request");
                     const posts = response.data.slice(0, 4);
                     const updatedPost = posts.map(post => {
                         return {
@@ -25,6 +26,7 @@ class Blog extends Component {
                     this.setState({posts : updatedPost});
                 })
                 .catch(error => {
+                    console.log("from local error");
                     this.setState({error : true});
                 });
     }
