@@ -4,7 +4,6 @@ import Post from '../../../components/Post/Post';
 import './Posts.css';
 
 
-
 class Posts extends Component {
 	state = {
         posts : [],
@@ -15,7 +14,7 @@ class Posts extends Component {
 	componentDidMount(){
         axios.get('/posts')
                 .then(response => {
-                    console.log("from local request");
+                    //console.log("from local request");
                     const posts = response.data.slice(0, 4);
                     const updatedPost = posts.map(post => {
                         return {
@@ -32,24 +31,32 @@ class Posts extends Component {
 	}
 	
 	fullPostHandler = (id) => {
-        this.setState({selectedPost : id});
+        //this.props.history.push({pathname : '/id/' + id});
+        this.props.history.push('/id/' + id);
+
 	}
 	
 	render(){
 		let posts = <p>Something went wrong!</p>
         if(!this.state.error){
             posts = this.state.posts.map(post => {
-                return <Post 
-                    key={post.id} 
+                return (
+                // <Link to={'/id/' + post.id}  >
+                <Post 
+                    key={post.id}
                     title={post.title} 
                     author={post.author}
-                    click={() => this.fullPostHandler(post.id)} />;
+                    click={() => this.fullPostHandler(post.id)}  />
+                // </Link>
+                );
             })
         }
 		return(
-			<section className="Posts">
+            <div>
+                <section className="Posts">
                     {posts}
-            </section>
+                </section>
+            </div>
 		);
 	}
 }
