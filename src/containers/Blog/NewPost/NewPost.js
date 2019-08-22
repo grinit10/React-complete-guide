@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import './NewPost.css';
 import axios from 'axios';
 
@@ -7,7 +6,11 @@ class NewPost extends Component {
     state = {
         title: '',
         content: '',
-        author: 'Max'
+        author: 'Max',
+    }
+
+    componentDidMount(){
+        //if unauth => this.props.history.push('/posts')
     }
 
     postDataHandler = () => {
@@ -19,7 +22,9 @@ class NewPost extends Component {
         axios.post('https://jsonplaceholder.typicode.com/posts', data)
             .then(response => {
                 console.log(response);
-            })
+                this.props.history.push({pathname : '/posts'})
+            });
+        
     }
 
     render () {

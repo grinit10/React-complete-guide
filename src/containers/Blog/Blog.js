@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
 
 import './Blog.css';
 import Posts from '../Blog/Posts/Posts';
@@ -7,19 +7,23 @@ import NewPost from './NewPost/NewPost';
 import FullPost from './FullPost/FullPost';
 
 class Blog extends Component {
+    state = {
+        auth : false
+    }
+
     render () {
         return (
             <div>
                 <nav className='Blog'>
                     <ul>
                         <li><NavLink 
-                        to='/' 
+                        to='/posts' 
                         exact 
                         activeClassName='my-active'
                         activeStyle={{
                             color : 'orange',
                             textDecoration : 'underline'
-                        }}>Home</NavLink>
+                        }}>Posts</NavLink>
                         </li>
 
                         <li><NavLink to={{
@@ -33,9 +37,13 @@ class Blog extends Component {
                 </nav>
                 <section>
                     {/* <Route path='/' render={() => <Posts />}/> */}
-                        <Route path='/' exact component={Posts} />
-                        <Route path='/new-post' exact component={NewPost} />
+                    <Switch>
+                       {this.state.auth ? <Route path='/new-post' exact component={NewPost}/> : null} 
                         <Route path='/id/:id' exact component={FullPost}/>
+                        <Route path='/posts' exact component={Posts} />
+                        <Route render={()=> <h1>Not Found</h1>} />
+                        {/* <Redirect from='/' to='/posts'/> */}
+                    </Switch>
                 </section>
             </div>
         );
